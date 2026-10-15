@@ -1,10 +1,11 @@
-Truckload Android 0.2.0 validation
-PASS: native SDK build and APK v2/v3 signature verification.
-PASS: 304 telemetry/framing checks.
-PASS: 19 update URL and integrity checks.
-PASS: original version 1 to version 2 upgrade on Android 15.
-PASS: selected tab retained across the upgrade.
-PASS: original and updated APK share the same SHA-256 signing certificate.
-Prior version's six tabs, native color dialog and blank disconnected readings passed emulator checks.
-Live release update flow is tested after publication; see the output report for that check.
+PASS: GitHub public manifest and SHA-256 validation
+PASS: live GitHub release discovery from Android 15
+PASS: downloaded APK passed size, hash, package, version and certificate checks
+PASS: Android install-source permission and Update approval flow
+PASS: Android installed the release in place and reopened it
+PASS: custom repository setting retained across the update
+PASS: already-current version reports up to date
+PASS: no fatal AndroidRuntime exception
+PASS: original v1 to v2 upgrade kept selected tab
+PASS: 304 protocol checks and 19 update-policy checks
 Physical phone-to-Heltec Bluetooth remains untested here.
