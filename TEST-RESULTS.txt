@@ -1,11 +1,29 @@
-PASS: GitHub public manifest and SHA-256 validation
-PASS: live GitHub release discovery from Android 15
-PASS: downloaded APK passed size, hash, package, version and certificate checks
-PASS: Android install-source permission and Update approval flow
-PASS: Android installed the release in place and reopened it
-PASS: custom repository setting retained across the update
-PASS: already-current version reports up to date
-PASS: no fatal AndroidRuntime exception
-PASS: original v1 to v2 upgrade kept selected tab
-PASS: 304 protocol checks and 19 update-policy checks
-Physical phone-to-Heltec Bluetooth remains untested here.
+Truckload Android 0.3.0 / companion firmware 0.6.1
+
+PASS: native APK builds with the original signing key.
+PASS: ESP-IDF 5.5.5 firmware compiled and flashed on COM3, application region only.
+PASS: 304 telemetry/framing checks, 19 update-policy checks, 266 feature/projection checks.
+
+PASS: new hardware controls disabled until compatible firmware connects
+PASS: compatible firmware enables driving controls
+PASS: real ready calibrated state permits capture outside bench
+PASS: bench controls disabled before explicit start
+PASS: calibration capture disabled in bench mode
+PASS: bench simulator available after bench activation
+PASS: native map downloaded and cached visible OpenStreetMap tiles
+PASS: missing or disconnected GPS never reports a fake live location
+
+PASS: firmware capability handshake
+PASS: six driving patterns accepted and read back
+PASS: brightness and secondary color validated
+PASS: manual driving works without GPS and returns to load mode
+PASS: simulated load/pressure stay separate from real readings; calibration capture locked
+PASS: real sensor diagnostics include ADC and sensor voltage
+PASS: bench can select driving, work, off and load outputs
+PASS: invalid simulated values rejected
+PASS: bench automatically stops after heartbeat timeout
+PASS: bench stops on BLE disconnect
+PASS: driving settings persist across restart; bench does not
+Original driving settings restored. Real LED appearance and sensor accuracy require wired hardware checks.
+
+Phone-to-Heltec connection confirmed by the user. Physical LED appearance and sensor accuracy are not visually verified here. The map screenshot uses a labelled Chicago emulator fixture, not the actual truck location.
