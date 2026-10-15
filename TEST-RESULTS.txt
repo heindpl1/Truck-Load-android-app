@@ -27,3 +27,16 @@ PASS: driving settings persist across restart; bench does not
 Original driving settings restored. Real LED appearance and sensor accuracy require wired hardware checks.
 
 Phone-to-Heltec connection confirmed by the user. Physical LED appearance and sensor accuracy are not visually verified here. The map screenshot uses a labelled Chicago emulator fixture, not the actual truck location.
+
+Live published app update validation:
+PASS: GitHub public manifest and SHA-256 validation
+PASS: live GitHub release discovery from Android 15
+PASS: downloaded APK passed size, hash, package, version and certificate checks
+PASS: Android install-source permission and Update approval flow
+PASS: Android installed the release in place and reopened it
+PASS: custom repository setting retained across the update
+PASS: already-current version reports up to date
+PASS: no fatal AndroidRuntime exception
+PASS: actual published v0.2.0 to v0.3.0 upgrade kept the saved repository setting
+PASS: 304 protocol checks, 19 update-policy checks and 266 feature/projection checks
+Physical phone-to-Heltec Bluetooth remains untested here.

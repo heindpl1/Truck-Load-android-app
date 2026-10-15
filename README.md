@@ -56,7 +56,7 @@ GPS shows the Heltec's valid position in blue and the saved plant/geofence in gr
 
 Overview → Bench mode (also available from Lighting) opens a temporary tester. Tap Start bench test. Test load, driving, work or off outputs. The SIMULATED load slider operates bench lights; the separate SIMULATED pressure slider previews the selected trailer's calibration and target settings. Neither is published as real weight or pressure. Real sensor testing has a separate explicit switch and shows ADC voltage, divided-back sensor voltage, status and real filtered pressure.
 
-Bench sensor enable does not change the normal saved sensor setting. Calibration capture is locked during a test. Closing the tester, leaving the app or disconnecting stops the test, and firmware stops it after 15 seconds without a heartbeat. Bench mode never survives a restart. Normal lighting settings are restored after bench mode ends. Real LED appearance and sensor accuracy still need checking with the actual wired hardware.
+Bench sensor enable does not change the normal saved sensor setting. Calibration capture is locked during a test. Closing the tester, leaving the app or disconnecting stops the test, and firmware stops it after 15 seconds without a heartbeat. Bench mode never survives a restart. Normal lighting mode resumes after bench mode ends. Changes you explicitly make to saved driving colors, brightness or patterns remain saved. Real LED appearance and sensor accuracy still need checking with the actual wired hardware.
 
 ## In-app updates
 
