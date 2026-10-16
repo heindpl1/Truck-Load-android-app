@@ -10,14 +10,14 @@ This is a native Android application: native Android screens and Bluetooth LE, w
 4. Tap **Connect**, allow **Nearby devices**, and select **TruckLoad-Heltec**. On Android 8–11, Bluetooth discovery also requires the system Location permission and Location switch; this app does not read the phone's GPS.
 5. Keep **Sensor input: Off** while the pressure sensor is disconnected. The load display stays blank until the enabled sensor has a valid, calibrated reading.
 
-Android 8.0 or newer, with Bluetooth LE, is required. Bluetooth controls work without an account, internet service or PC. Internet access is used for map tiles while viewing GPS, and for app update checks/downloads. Bluetooth controls and bench tests work without internet. The phone must remain within Bluetooth range. The app is intended for foreground use; connection survival while Android suspends or kills it is not guaranteed. Reopen and reconnect when needed.
+Android 8.0 or newer, with Bluetooth LE, is required. Bluetooth controls work without an account, internet service or PC. Internet access is used for map tiles while viewing GPS, and for app update checks/downloads. Bluetooth controls and bench tests work without internet. The phone must remain within Bluetooth range. The app is intended for foreground use; connection survival while Android suspends or kills it is not guaranteed. While the app is open it remembers the last successfully connected Heltec and makes up to three direct reconnect attempts (after 2, 8 and 20 seconds), without repeated scans. Intentional Disconnect/Cancel suppresses retries for that app session. Connect remains available. Reopening the app allows retrying again; permission denial or disabled Bluetooth never starts a scan or a permission loop.
 
 ## Controls
 
-- **Overview:** live weight, pressure, load progress, selected trailer, sensor enable.
+- **Overview:** live weight, pressure, load progress, quick trailer selection, large work-light toggle, guided calibration, sensor enable, Bluetooth/sensor/GPS status and compatibility.
 - **Trailers:** create/select trailers, target and overload reference, capture calibration against known scale weights.
 - **Lighting:** manual/GPS driving controls, six driving patterns, brightness, two driving colors, work lights, and animated examples of all four load patterns.
-- **Colors:** six mode colors, RGB sliders and hexadecimal input, saved on the Heltec.
+- **Colors:** six mode colors, a visual preset palette, selected-color preview and custom six-digit hexadecimal input, saved on the Heltec.
 - **OLED:** choose one of four pages. No automatic cycling; selection is saved on the controller.
 - **GPS:** native map with the Heltec position, saved plant/geofence, drag, zoom and follow; satellite status, speed and plant controls. It uses the Heltec GPS.
 
@@ -34,7 +34,7 @@ Set-Location "PATH_TO_EXTRACTED_ANDROID_SOURCE"
 .\Build.ps1 -Sdk "D:\Android" -Java "D:\Java\corretto17\jdk17.0.17_10"
 ```
 
-The result is Truckload-Android.apk. The application id is com.truckload.controller, version 0.3.0 (3), minimum API 26, target API 35. SDK and Java paths can be changed with the parameters above. Build products go into build/.
+The result is Truckload-Android.apk. The application id is com.truckload.controller, version 0.4.0 (4), minimum API 26, target API 35. SDK and Java paths can be changed with the parameters above. Build products go into build/.
 
 Build.ps1 creates a private personal signing identity in .local-signing/ on its first run. Keep this folder private and backed up to sign compatible updates. It is deliberately excluded from the source download. A build signed with a different key cannot update an existing installation; uninstall the old app first. Controller settings and calibration are stored on the Heltec, not in the Android installation.
 
@@ -69,3 +69,15 @@ To publish a future version: increase versionCode and versionName in AndroidMani
 ## Privacy
 
 INTERNET permission is used for GPS map imagery and user-initiated update checks/APK downloads. REQUEST_INSTALL_PACKAGES lets the app hand verified updates to Android for approval. No analytics, advertising, account or phone-GPS reads. BLE Nearby devices permissions are used to scan and connect. Android 8–11 additionally requires Location permission for BLE discovery. The local selected tab is stored on the phone; configuration is read from and written to the Heltec.
+
+## Version 0.4.0 changes
+
+The existing dark/mint layout, map, OLED pages, trailer settings, lighting patterns and app updater remain. The palette is shared by Colors and both driving-color controls. Swatches update the preview immediately; Save sends the original color command without changing lighting mode. Work lights use the existing WORK_LIGHT command, saved color/brightness, and controller-confirmed state; while waiting for confirmation the large toggle is disabled. Exit Bench Mode first.
+
+Overview provides direct selection among saved trailers through PROFILE_SELECT. Guided calibration also opens from Trailers. It enables the real sensor only explicitly, requires fresh READY sensor and pressure records, blocks bench values, shows the actual saved count, and captures known scale weights using CAL_CAPTURE. At least two points at meaningfully different pressures are needed. The guide checks a minimum 2 PSI separation between points captured in the current guide session; the protocol does not expose pressures of existing saved points. It never clears saved points or changes the controller calibration math. An empty trailer's known scale weight need not be zero.
+
+The existing Bench Mode now contains zone selection, direct Off/Red/Green/Blue/White tests, and diagnostics. Companion firmware **0.6.2** supports independent GPIO43/GPIO44 zones, actual raw 12-bit ADC counts and firmware identification. Firmware **0.6.1 remains compatible** for its existing both-zone load/driving/work/off tests; independent zone/color controls remain disabled. Unsupported controls never send speculative commands. A dedicated isolated white-channel test remains disabled; White tests the current FastLED RGB-to-RGBW conversion. RSSI is shown as unavailable. Stale/missing diagnostic readings are labelled unavailable.
+
+Capabilities and firmware identity are read from the controller; the app does not guess a version from the feature set. On firmware 0.6.1 the version is unavailable because it is not reported. The Overview identifies Compatible or Limited features, explaining which controls require an update. Android 8–11 and 12+ permission declarations are unchanged. No background service or repeated scanning was added. Bench state is never restarted automatically after a reconnect.
+
+Run all JVM checks with `.\Test.ps1` (same optional -Java parameter as Build.ps1). Test results and remaining phone/physical hardware checks accompany this review build. Version 0.4.0 is distributed through the existing GitHub Releases app updater.

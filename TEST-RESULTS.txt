@@ -1,42 +1,10 @@
-Truckload Android 0.3.0 / companion firmware 0.6.1
-
-PASS: native APK builds with the original signing key.
-PASS: ESP-IDF 5.5.5 firmware compiled and flashed on COM3, application region only.
-PASS: 304 telemetry/framing checks, 19 update-policy checks, 266 feature/projection checks.
-
-PASS: new hardware controls disabled until compatible firmware connects
-PASS: compatible firmware enables driving controls
-PASS: real ready calibrated state permits capture outside bench
-PASS: bench controls disabled before explicit start
-PASS: calibration capture disabled in bench mode
-PASS: bench simulator available after bench activation
-PASS: native map downloaded and cached visible OpenStreetMap tiles
-PASS: missing or disconnected GPS never reports a fake live location
-
-PASS: firmware capability handshake
-PASS: six driving patterns accepted and read back
-PASS: brightness and secondary color validated
-PASS: manual driving works without GPS and returns to load mode
-PASS: simulated load/pressure stay separate from real readings; calibration capture locked
-PASS: real sensor diagnostics include ADC and sensor voltage
-PASS: bench can select driving, work, off and load outputs
-PASS: invalid simulated values rejected
-PASS: bench automatically stops after heartbeat timeout
-PASS: bench stops on BLE disconnect
-PASS: driving settings persist across restart; bench does not
-Original driving settings restored. Real LED appearance and sensor accuracy require wired hardware checks.
-
-Phone-to-Heltec connection confirmed by the user. Physical LED appearance and sensor accuracy are not visually verified here. The map screenshot uses a labelled Chicago emulator fixture, not the actual truck location.
-
-Live published app update validation:
-PASS: GitHub public manifest and SHA-256 validation
-PASS: live GitHub release discovery from Android 15
-PASS: downloaded APK passed size, hash, package, version and certificate checks
-PASS: Android install-source permission and Update approval flow
-PASS: Android installed the release in place and reopened it
-PASS: custom repository setting retained across the update
-PASS: already-current version reports up to date
-PASS: no fatal AndroidRuntime exception
-PASS: actual published v0.2.0 to v0.3.0 upgrade kept the saved repository setting
-PASS: 304 protocol checks, 19 update-policy checks and 266 feature/projection checks
-Physical phone-to-Heltec Bluetooth remains untested here.
+Truckload v0.4.0 review build / companion firmware 0.6.2
+PASS: JVM tests: 304 telemetry + 19 updater + 266 features/map + 33 safety = 622
+PASS: native Android Build.ps1; same signing certificate; APK v2/v3 verified
+PASS: Android 15 native instrumentation (12 checks), navigation, palette and blank disconnected pressure
+PASS: signed v0.3 -> v0.4 upgrade retains saved app preference
+PASS: real Heltec BLE tests: version/capabilities, 15 zone/color combinations, validation, existing bench modes, raw ADC, capture lock, simulator separation, timeout and disconnect/reconnect
+PASS: application NVS preservation, 28 stored truckload/truckprof entries match
+REVIEW: see Truckload-v0.4.0-review.md and detailed test reports
+NOT VERIFIED: actual strip color/channel order, real sensor accuracy, real-phone auto reconnect/permissions
+Firmware 0.6.2 is already flashed on the attached COM3 board.

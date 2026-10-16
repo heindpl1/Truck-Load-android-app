@@ -12,6 +12,6 @@ $release=Join-Path $PSScriptRoot 'release'
 New-Item -ItemType Directory -Force $release | Out-Null
 $apk=Join-Path $PSScriptRoot 'Truckload-Android.apk'
 Copy-Item $apk (Join-Path $release 'Truckload-Android.apk') -Force
-$metadata=[ordered]@{versionCode=$code;versionName=$version;apkUrl="https://github.com/$repository/releases/download/v$version/Truckload-Android.apk";sha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLowerInvariant();sizeBytes=(Get-Item $apk).Length;notes='Driving-light controls with six patterns, two colors and brightness; animated load examples; native GPS map; supervised bench testing. Driving/bench controls require companion firmware 0.6.1 (the board on this PC is already updated).'}
+$metadata=[ordered]@{versionCode=$code;versionName=$version;apkUrl="https://github.com/$repository/releases/download/v$version/Truckload-Android.apk";sha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLowerInvariant();sizeBytes=(Get-Item $apk).Length;notes='Visual color palette, quick work lights and trailer selection, guided calibration, bounded foreground reconnect, clearer status and bench diagnostics. Firmware 0.6.2 enables independent zones, direct color tests and raw ADC/version reporting; firmware 0.6.1 remains supported with limited features.'}
 $metadata | ConvertTo-Json | Set-Content (Join-Path $release 'truckload-update.json') -Encoding utf8
 Write-Host "Upload both files in $release to a published GitHub release tagged v$version."

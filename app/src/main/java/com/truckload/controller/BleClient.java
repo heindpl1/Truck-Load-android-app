@@ -21,6 +21,8 @@ public final class BleClient {
  private boolean ready=false,busy=false,discovering=false;private int mtu=23;
  private Runnable scanTimeout,connectTimeout,writeTimeout,mtuTimeout;
  public BleClient(Context c,Listener l){context=c.getApplicationContext();listener=l;BluetoothManager m=(BluetoothManager)c.getSystemService(Context.BLUETOOTH_SERVICE);adapter=m==null?null:m.getAdapter();}
+ public String address(){return gatt==null?null:gatt.getDevice().getAddress();}
+ public void reconnect(String address){try{connect(adapter.getRemoteDevice(address));}catch(RuntimeException e){fail("Saved controller unavailable. Use Connect to choose it again.");}}
  public boolean available(){return adapter!=null;}
  public boolean enabled(){return adapter!=null&&adapter.isEnabled();}
  public void scan(Discovery discovery){

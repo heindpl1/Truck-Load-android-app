@@ -10,6 +10,8 @@ public final class Telemetry {
  public static final String[] COLOR_HELP={"Below 75% of target","75–89% of target","90–99% of target","100% of target or more","Used by automatic driving lighting","White uses the strip's RGBW conversion","Used by chase and alternating patterns"};
  public final Map<String,String> colors=new LinkedHashMap<>();
  public final List<Profile> profiles=new ArrayList<>();
+ public String firmware="Unavailable (not reported)",benchZone="BOTH",benchColor="MODE";public int rawAdc=-1;
+ public final Set<String> capabilities=new HashSet<>();public boolean capsReceived=false;public int protocolVersion=0;
  public boolean extended=false,bench=false,benchSensor=false;public String driveControl="LOAD",drivePattern="SOLID",benchMode="LOAD";public int driveBrightness=140;public double latitude=Double.NaN,longitude=Double.NaN,plantLat=Double.NaN,plantLon=Double.NaN,adcVolts=Double.NaN,sensorVolts=Double.NaN,benchPercent=50,benchPsi=25,benchWeight=Double.NaN,benchEstimate=Double.NaN;
  public String sensor="OFF",profile="NONE",vehicle="NO_FIX",lightMode="LOAD",pattern="BAR";
  public double psi=Double.NaN,weight=Double.NaN,percent=Double.NaN,target=0,overload=0,speed=Double.NaN,distance=Double.NaN;
@@ -27,13 +29,14 @@ public final class Telemetry {
   try{
    switch(type){
     case "T":if(a.length<6)break;psi=number(a[1]);weight=number(a[2]);percent=number(a[3]);target=number(a[4]);profile=a[5];break;
-    case "SENSOR":if(a.length>=3){sensor=a[1].equals("OFF")?"OFF":a[2];adcVolts=a.length>3?number(a[3]):Double.NaN;sensorVolts=a.length>4?number(a[4]):Double.NaN;}break;
+    case "SENSOR":if(a.length>=3){sensor=a[1].equals("OFF")?"OFF":a[2];adcVolts=a.length>3?number(a[3]):Double.NaN;sensorVolts=a.length>4?number(a[4]):Double.NaN;rawAdc=a.length>5&&number(a[5])>=0&&number(a[5])<=4095?integer(a[5]):-1;}break;
     case "STATUS":if(a.length<9)break;profile=a[1];target=number(a[2]);overload=number(a[3]);points=integer(a[4]);workBrightness=integer(a[6]);gpsAuto=a[7].equals("GPS_AUTO_ON");plant=a[8].equals("PLANT_SET");break;
     case "GPS":if(a.length<11)break;gpsFix=a[1].equals("1");latitude=number(a[2]);longitude=number(a[3]);gpsFix=gpsFix&&Double.isFinite(latitude)&&Double.isFinite(longitude)&&Math.abs(latitude)<=90&&Math.abs(longitude)<=180;speed=number(a[4]);satellites=integer(a[6]);distance=number(a[7]);vehicle=a[8];gpsAuto=a[9].equals("1");plant=a[10].equals("1");break;
     case "GPS_CONFIG":if(a.length>=4){radius=integer(a[1]);plant=a[2].equals("1");gpsAuto=a[3].equals("1");if(a.length>=6){plantLat=number(a[4]);plantLon=number(a[5]);}}break;
-    case "CAPS":extended=a.length>2&&integer(a[1])>=2;break;
+    case "FW_INFO":if(a.length>=2&&a[1].matches("[0-9]+\\.[0-9]+\\.[0-9]+"))firmware=a[1];break;
+    case "CAPS":if(a.length>2){capsReceived=true;protocolVersion=integer(a[1]);capabilities.clear();capabilities.addAll(Arrays.asList(a[2].split(",")));extended=protocolVersion>=2&&capabilities.contains("DRIVING")&&capabilities.contains("BENCH");}break;
     case "DRIVE_CONFIG":if(a.length>=5){driveControl=a[1];drivePattern=a[2];driveBrightness=Math.max(1,Math.min(255,integer(a[3])));if(validHex(a[4]))colors.put("DRIVE2",a[4].toUpperCase(Locale.US));}break;
-    case "BENCH_STATE":if(a.length>=6){bench=a[1].equals("1");benchMode=a[2];benchPercent=number(a[3]);benchPsi=number(a[4]);benchSensor=a[5].equals("1");}break;
+    case "BENCH_STATE":if(a.length>=6){bench=a[1].equals("1");benchMode=a[2];benchPercent=number(a[3]);benchPsi=number(a[4]);benchSensor=a[5].equals("1");benchZone=a.length>6&&Arrays.asList("BOTH","1","2").contains(a[6])?a[6]:"BOTH";benchColor=a.length>7?a[7]:"MODE";}break;
     case "BENCH_RESULT":if(a.length>=4){benchWeight=number(a[2]);benchEstimate=number(a[3]);}break;
     case "OLED_LAYOUT":if(a.length>=2)page=Math.max(0,Math.min(3,integer(a[1])));break;
     case "LIGHT_STATE":if(a.length>=5){lightMode=a[1];pattern=a[2];workBrightness=integer(a[4]);}break;
