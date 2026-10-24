@@ -34,7 +34,7 @@ Set-Location "PATH_TO_EXTRACTED_ANDROID_SOURCE"
 .\Build.ps1 -Sdk "D:\Android" -Java "D:\Java\corretto17\jdk17.0.17_10"
 ```
 
-The result is Truckload-Android.apk. The application id is com.truckload.controller, version 0.6.5 (7), minimum API 26, target API 35. SDK and Java paths can be changed with the parameters above. Build products go into build/.
+The result is Truckload-Android.apk. The application id is com.truckload.controller, version 0.6.6 (8), minimum API 26, target API 35. SDK and Java paths can be changed with the parameters above. Build products go into build/.
 
 Build.ps1 creates a private personal signing identity in .local-signing/ on its first run. Keep this folder private and backed up to sign compatible updates. It is deliberately excluded from the source download. A build signed with a different key cannot update an existing installation; uninstall the old app first. Controller settings and calibration are stored on the Heltec, not in the Android installation.
 
@@ -96,3 +96,8 @@ Lighting now uses dropdowns for load and driving patterns. Five new effects join
 ## Android v0.6.5 startup hotfix
 
 Removes an obsolete update loop that still indexed the removed load-pattern buttons, causing v0.6.4 to crash at startup. Dropdowns and new patterns are retained. The crash was reproduced on Android 15, then the fixed APK installed over v0.6.4 without clearing app data. Cold launch, all six tabs, repeated refresh and dropdown readback passed instrumented tests. Test-Startup.ps1 builds and runs the startup regression tests on emulator-5556. Existing firmware/web app v0.6.4 remains compatible and needs no update.
+
+
+## Android v0.6.6 UI cleanup
+
+Lighting has a mode chooser with relevant controls, collapsed Strip setup with saved zone summaries, and collapsed Testing & diagnostics. The load example section is removed. Save feedback waits for controller acknowledgement and preserves unsaved edits. The same tabs are now in a single scrollable navigation row. Firmware/web v0.6.4 remains compatible. See UI-v0.6.6.md for validation and Test-UI.ps1 for the Android UI regression suite.
