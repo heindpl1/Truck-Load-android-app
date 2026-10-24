@@ -81,3 +81,8 @@ The existing Bench Mode now contains zone selection, direct Off/Red/Green/Blue/W
 Capabilities and firmware identity are read from the controller; the app does not guess a version from the feature set. On firmware 0.6.1 the version is unavailable because it is not reported. The Overview identifies Compatible or Limited features, explaining which controls require an update. Android 8–11 and 12+ permission declarations are unchanged. No background service or repeated scanning was added. Bench state is never restarted automatically after a reconnect.
 
 Run all JVM checks with `.\Test.ps1` (same optional -Java parameter as Build.ps1). Test results and remaining phone/physical hardware checks accompany this review build. Version 0.4.0 is distributed through the existing GitHub Releases app updater.
+
+
+## v0.6.3 strip sizing
+
+Lighting now includes saved sizes for both zones: addressable groups, physical LEDs/meter, and physical LEDs/group. Enter group counts directly or calculate from meters, review the represented size, then save. Reconnect reads the controller settings. Settings persist on the Heltec. The current Zone 2 test strip is 7 groups of 7 LEDs at 84 LEDs/meter (49 LEDs total, about 0.583 meters). Other strips can use different group sizes. Existing trailer calibration, GPS, OLED and lighting controls remain available. Firmware 0.6.3 is required for sizing. Companion firmware and browser sources are under companion-v0.6.3. Color order is WRGB, established from four user-observed channels; post-update physical verification is still pending.

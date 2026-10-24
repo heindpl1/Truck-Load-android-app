@@ -12,6 +12,6 @@ $release=Join-Path $PSScriptRoot 'release'
 New-Item -ItemType Directory -Force $release | Out-Null
 $apk=Join-Path $PSScriptRoot 'Truckload-Android.apk'
 Copy-Item $apk (Join-Path $release 'Truckload-Android.apk') -Force
-$metadata=[ordered]@{versionCode=$code;versionName=$version;apkUrl="https://github.com/$repository/releases/download/v$version/Truckload-Android.apk";sha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLowerInvariant();sizeBytes=(Get-Item $apk).Length;notes='Visual color palette, quick work lights and trailer selection, guided calibration, bounded foreground reconnect, clearer status and bench diagnostics. Firmware 0.6.2 enables independent zones, direct color tests and raw ADC/version reporting; firmware 0.6.1 remains supported with limited features.'}
+$metadata=[ordered]@{versionCode=$code;versionName=$version;apkUrl="https://github.com/$repository/releases/download/v$version/Truckload-Android.apk";sha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLowerInvariant();sizeBytes=(Get-Item $apk).Length;notes='Persistent independent strip sizing with length calculation, corrected WRGB color order for the tested WS2814 strip, and retained driving, GPS, OLED, calibration and bench features. Requires firmware 0.6.3 for strip sizing. Zone 2 configured for 7 groups / 49 physical LEDs. Physical color and section validation is pending user confirmation.'}
 $metadata | ConvertTo-Json | Set-Content (Join-Path $release 'truckload-update.json') -Encoding utf8
 Write-Host "Upload both files in $release to a published GitHub release tagged v$version."
