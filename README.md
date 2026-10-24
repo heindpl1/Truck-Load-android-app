@@ -34,7 +34,7 @@ Set-Location "PATH_TO_EXTRACTED_ANDROID_SOURCE"
 .\Build.ps1 -Sdk "D:\Android" -Java "D:\Java\corretto17\jdk17.0.17_10"
 ```
 
-The result is Truckload-Android.apk. The application id is com.truckload.controller, version 0.4.0 (4), minimum API 26, target API 35. SDK and Java paths can be changed with the parameters above. Build products go into build/.
+The result is Truckload-Android.apk. The application id is com.truckload.controller, version 0.6.4 (6), minimum API 26, target API 35. SDK and Java paths can be changed with the parameters above. Build products go into build/.
 
 Build.ps1 creates a private personal signing identity in .local-signing/ on its first run. Keep this folder private and backed up to sign compatible updates. It is deliberately excluded from the source download. A build signed with a different key cannot update an existing installation; uninstall the old app first. Controller settings and calibration are stored on the Heltec, not in the Android installation.
 
@@ -86,3 +86,8 @@ Run all JVM checks with `.\Test.ps1` (same optional -Java parameter as Build.ps1
 ## v0.6.3 strip sizing
 
 Lighting now includes saved sizes for both zones: addressable groups, physical LEDs/meter, and physical LEDs/group. Enter group counts directly or calculate from meters, review the represented size, then save. Reconnect reads the controller settings. Settings persist on the Heltec. The current Zone 2 test strip is 7 groups of 7 LEDs at 84 LEDs/meter (49 LEDs total, about 0.583 meters). Other strips can use different group sizes. Existing trailer calibration, GPS, OLED and lighting controls remain available. Firmware 0.6.3 is required for sizing. Companion firmware and browser sources are under companion-v0.6.3. Color order is WRGB, established from four user-observed channels; post-update physical verification is still pending.
+
+
+## v0.6.4 fading and pattern dropdowns
+
+Lighting now uses dropdowns for load and driving patterns. Five new effects join the existing six: Comet trail, Scanner sweep, Color wave, Aurora and Theater chase. Progress and center load bars fade their boundary groups and ease toward new readings. All effects use the saved group counts. Firmware 0.6.4 is required for the new patterns; the currently attached Heltec is updated. The Zone 2 demonstration was observed and approved by the user, and a new pattern was verified across reset. Zone 1 is untested physically. See companion-v0.6.4/CHANGES.md and release assets.
