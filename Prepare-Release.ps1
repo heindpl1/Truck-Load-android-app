@@ -12,6 +12,6 @@ $release=Join-Path $PSScriptRoot 'release'
 New-Item -ItemType Directory -Force $release | Out-Null
 $apk=Join-Path $PSScriptRoot 'Truckload-Android.apk'
 Copy-Item $apk (Join-Path $release 'Truckload-Android.apk') -Force
-$metadata=[ordered]@{versionCode=$code;versionName=$version;apkUrl="https://github.com/$repository/releases/download/v$version/Truckload-Android.apk";sha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLowerInvariant();sizeBytes=(Get-Item $apk).Length;notes='Fading load-bar edges, smoother animations, pattern dropdowns and five new effects: comet, scanner, wave, aurora and theater chase. Requires firmware 0.6.4 for the new effects. Zone 2 hardware demo observed and approved; saved sizes and settings retained.'}
+$metadata=[ordered]@{versionCode=$code;versionName=$version;apkUrl="https://github.com/$repository/releases/download/v$version/Truckload-Android.apk";sha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLowerInvariant();sizeBytes=(Get-Item $apk).Length;notes='Fixes the v0.6.4 startup crash caused by obsolete pattern-button updates after moving to dropdowns. Verified by reproducing the crash and installing this update over v0.6.4 on Android, then testing startup and all tabs. Firmware 0.6.4 remains compatible and needs no reflash.'}
 $metadata | ConvertTo-Json | Set-Content (Join-Path $release 'truckload-update.json') -Encoding utf8
 Write-Host "Upload both files in $release to a published GitHub release tagged v$version."

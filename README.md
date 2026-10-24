@@ -34,7 +34,7 @@ Set-Location "PATH_TO_EXTRACTED_ANDROID_SOURCE"
 .\Build.ps1 -Sdk "D:\Android" -Java "D:\Java\corretto17\jdk17.0.17_10"
 ```
 
-The result is Truckload-Android.apk. The application id is com.truckload.controller, version 0.6.4 (6), minimum API 26, target API 35. SDK and Java paths can be changed with the parameters above. Build products go into build/.
+The result is Truckload-Android.apk. The application id is com.truckload.controller, version 0.6.5 (7), minimum API 26, target API 35. SDK and Java paths can be changed with the parameters above. Build products go into build/.
 
 Build.ps1 creates a private personal signing identity in .local-signing/ on its first run. Keep this folder private and backed up to sign compatible updates. It is deliberately excluded from the source download. A build signed with a different key cannot update an existing installation; uninstall the old app first. Controller settings and calibration are stored on the Heltec, not in the Android installation.
 
@@ -91,3 +91,8 @@ Lighting now includes saved sizes for both zones: addressable groups, physical L
 ## v0.6.4 fading and pattern dropdowns
 
 Lighting now uses dropdowns for load and driving patterns. Five new effects join the existing six: Comet trail, Scanner sweep, Color wave, Aurora and Theater chase. Progress and center load bars fade their boundary groups and ease toward new readings. All effects use the saved group counts. Firmware 0.6.4 is required for the new patterns; the currently attached Heltec is updated. The Zone 2 demonstration was observed and approved by the user, and a new pattern was verified across reset. Zone 1 is untested physically. See companion-v0.6.4/CHANGES.md and release assets.
+
+
+## Android v0.6.5 startup hotfix
+
+Removes an obsolete update loop that still indexed the removed load-pattern buttons, causing v0.6.4 to crash at startup. Dropdowns and new patterns are retained. The crash was reproduced on Android 15, then the fixed APK installed over v0.6.4 without clearing app data. Cold launch, all six tabs, repeated refresh and dropdown readback passed instrumented tests. Test-Startup.ps1 builds and runs the startup regression tests on emulator-5556. Existing firmware/web app v0.6.4 remains compatible and needs no update.
