@@ -1,5 +1,9 @@
 # Truckload for Android
 
+## v0.7.1: GPS button feedback
+
+Android-only fix for GPS button feedback, confirmed state highlights and refresh recovery. Compatible with firmware/web 0.7.0; no controller update is needed. See [changes and tests](GPS-BUTTONS-v0.7.1.md).
+
 ## v0.7.0: location rules and ground-speed lighting
 
 Save overlapping areas with priorities and separate driving/stopped actions, choose lighting outside those areas, and use GPS ground-speed motion with an independent direction switch for each zone. Install app and firmware 0.7.0 together. See [setup and validation](GPS-v0.7.0.md); physical output and real driving still need truck-side testing.

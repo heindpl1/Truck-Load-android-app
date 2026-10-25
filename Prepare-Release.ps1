@@ -12,6 +12,6 @@ $release=Join-Path $PSScriptRoot 'release'
 New-Item -ItemType Directory -Force $release | Out-Null
 $apk=Join-Path $PSScriptRoot 'Truckload-Android.apk'
 Copy-Item $apk (Join-Path $release 'Truckload-Android.apk') -Force
-$metadata=[ordered]@{versionCode=$code;versionName=$version;apkUrl="https://github.com/$repository/releases/download/v$version/Truckload-Android.apk";sha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLowerInvariant();sizeBytes=(Get-Item $apk).Length;notes='GPS area lighting rules, separate driving/stopped/no-fix defaults, and GPS ground-speed effect with independent zone direction and alignment. Requires firmware 0.7.0. Software and controller storage tests passed; driving and physical strip output await truck testing.'}
+$metadata=[ordered]@{versionCode=$code;versionName=$version;apkUrl="https://github.com/$repository/releases/download/v$version/Truckload-Android.apk";sha256=(Get-FileHash $apk -Algorithm SHA256).Hash.ToLowerInvariant();sizeBytes=(Get-Item $apk).Length;notes='GPS buttons now show press feedback, confirmed mode highlighting, waiting/save messages, and clear map Zoom/Follow feedback. Refresh remains available when settings are missing, with bounded retries and protection for unread saved areas. Compatible with firmware 0.7.0; no controller update needed. Tested before publication.'}
 $metadata | ConvertTo-Json | Set-Content (Join-Path $release 'truckload-update.json') -Encoding utf8
 Write-Host "Upload both files in $release to a published GitHub release tagged v$version."
