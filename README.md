@@ -1,5 +1,9 @@
 # Truckload for Android
 
+## v0.7.0: location rules and ground-speed lighting
+
+Save overlapping areas with priorities and separate driving/stopped actions, choose lighting outside those areas, and use GPS ground-speed motion with an independent direction switch for each zone. Install app and firmware 0.7.0 together. See [setup and validation](GPS-v0.7.0.md); physical output and real driving still need truck-side testing.
+
 This is a native Android application: native Android screens and Bluetooth LE, with no WebView or website server. It controls the existing TruckLoad-Heltec firmware using the same Nordic UART service as the web app.
 
 ## Install on your phone

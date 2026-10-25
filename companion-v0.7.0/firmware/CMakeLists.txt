@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.16)
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+add_compile_definitions(ARDUINO_USB_MODE=1 ARDUINO_USB_CDC_ON_BOOT=1)
+set(PROJECT_VER "0.7.0")
+project(truck_load_v060)

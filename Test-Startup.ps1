@@ -1,7 +1,7 @@
 $ErrorActionPreference='Stop'
 $env:JAVA_HOME='D:\Java\corretto17\jdk17.0.17_10'
 $env:Path="$env:JAVA_HOME\bin;$env:Path"
-$root=Join-Path $PSScriptRoot 'startup-tests'
+$root='C:\TruckLoadBuild\android\startup-tests'
 $bt='D:\Android\build-tools\36.1.0';$platform='D:\Android\platforms\android-35\android.jar'
 New-Item -ItemType Directory -Force "$root\classes","$root\dex" | Out-Null
 function Run([string]$exe,[string[]]$arguments){ & $exe @arguments; if($LASTEXITCODE -ne 0){throw "Test build failed: $exe"} }
